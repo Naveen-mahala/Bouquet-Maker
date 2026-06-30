@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { generateBouquet } from '@/lib/arrangementEngine';
 
 export interface BouquetElement {
   id: string;
@@ -14,12 +15,16 @@ export interface BouquetElement {
   zIndex: number;
 }
 
+export type SizeMode = 'small' | 'medium' | 'grand';
+
 export interface MessageCardState {
   recipient: string;
+  sender: string;
   title: string;
   message: string;
   enabled: boolean;
 }
+
 
 interface BouquetStore {
   elements: BouquetElement[];
@@ -27,6 +32,8 @@ interface BouquetStore {
   selectedRibbon: string | null; // e.g. 'red-ribbon'
   selectedElementId: string | null;
   messageCard: MessageCardState;
+  sizeMode: SizeMode;
+
   
   // Elements actions
   addElement: (element: Omit<BouquetElement, 'id' | 'zIndex' | 'left' | 'top' | 'scaleX' | 'scaleY' | 'angle'> & { left?: number, top?: number, scaleX?: number, scaleY?: number, angle?: number }) => void;
@@ -42,6 +49,7 @@ interface BouquetStore {
   
   // Card actions
   updateMessageCard: (updates: Partial<MessageCardState>) => void;
+  setSizeMode: (mode: SizeMode) => void;
   
   // Layering actions
   bringForward: (id: string) => void;
@@ -58,10 +66,13 @@ export const useBouquetStore = create<BouquetStore>((set, get) => ({
   selectedElementId: null,
   messageCard: {
     recipient: '',
+    sender: '',
     title: 'For My Favorite Human ❤️',
     message: 'Thank you for being in my life. You make every day brighter and more beautiful.',
     enabled: true,
   },
+  sizeMode: 'medium',
+
 
   addElement: (elem) => {
     const defaultCoords = {
@@ -133,6 +144,9 @@ export const useBouquetStore = create<BouquetStore>((set, get) => ({
     messageCard: { ...state.messageCard, ...updates }
   })),
 
+  setSizeMode: (mode) => set({ sizeMode: mode }),
+
+
   bringForward: (id) => {
     const elements = [...get().elements];
     const index = elements.findIndex((el) => el.id === id);
@@ -164,176 +178,13 @@ export const useBouquetStore = create<BouquetStore>((set, get) => ({
   },
 
   loadPreset: (presetName) => {
-    const newElements: BouquetElement[] = [];
-    let wrap: string = 'kraft-paper';
-    let ribbon: string = 'red-ribbon';
-
-    const addPresetItem = (
-      type: 'flower' | 'leaf',
-      name: string,
-      category: string,
-      src: string,
-      left: number,
-      top: number,
-      scale: number,
-      angle: number
-    ) => {
-      newElements.push({
-        id: Math.random().toString(36).substring(2, 9),
-        type,
-        name,
-        category,
-        src,
-        left,
-        top,
-        scaleX: scale,
-        scaleY: scale,
-        angle,
-        zIndex: newElements.length + 10,
-      });
-    };
-
-    if (presetName === 'romantic') {
-      wrap = 'kraft-paper';
-      ribbon = 'red-ribbon';
-      // 15 Red Roses arranged in a lush dome
-      const rosePositions = [
-        { x: 400, y: 280, s: 0.85, a: 0 },
-        { x: 360, y: 310, s: 0.8, a: -15 },
-        { x: 440, y: 310, s: 0.8, a: 15 },
-        { x: 320, y: 350, s: 0.85, a: -30 },
-        { x: 480, y: 350, s: 0.85, a: 30 },
-        { x: 390, y: 360, s: 0.9, a: -5 },
-        { x: 410, y: 360, s: 0.9, a: 5 },
-        { x: 350, y: 400, s: 0.85, a: -10 },
-        { x: 450, y: 400, s: 0.85, a: 10 },
-        { x: 400, y: 430, s: 0.9, a: 0 },
-        // Outer layer roses
-        { x: 290, y: 410, s: 0.8, a: -40 },
-        { x: 510, y: 410, s: 0.8, a: 40 },
-        { x: 330, y: 460, s: 0.85, a: -20 },
-        { x: 470, y: 460, s: 0.85, a: 20 },
-        { x: 400, y: 490, s: 0.8, a: 0 },
-      ];
-      rosePositions.forEach((pos) => {
-        addPresetItem('flower', 'Red Rose', 'Roses', '/flowers/red-rose.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-      // Baby's breath fillers
-      const bbPositions = [
-        { x: 320, y: 290, s: 0.6, a: -25 },
-        { x: 480, y: 290, s: 0.6, a: 25 },
-        { x: 380, y: 410, s: 0.7, a: -10 },
-        { x: 420, y: 410, s: 0.7, a: 10 },
-        { x: 280, y: 460, s: 0.65, a: -50 },
-        { x: 520, y: 460, s: 0.65, a: 50 },
-      ];
-      bbPositions.forEach((pos) => {
-        addPresetItem('flower', "Baby's Breath", "Baby's Breath", '/flowers/babys-breath.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-    } else if (presetName === 'elegant') {
-      wrap = 'white-wrap';
-      ribbon = 'gold-ribbon';
-      // White Roses + Eucalyptus
-      const rosePositions = [
-        { x: 400, y: 300, s: 0.85, a: 0 },
-        { x: 350, y: 340, s: 0.8, a: -15 },
-        { x: 450, y: 340, s: 0.8, a: 15 },
-        { x: 380, y: 390, s: 0.85, a: -5 },
-        { x: 420, y: 390, s: 0.85, a: 5 },
-        { x: 320, y: 420, s: 0.8, a: -25 },
-        { x: 480, y: 420, s: 0.8, a: 25 },
-        { x: 400, y: 460, s: 0.85, a: 0 },
-        { x: 360, y: 490, s: 0.8, a: -10 },
-        { x: 440, y: 490, s: 0.8, a: 10 },
-      ];
-      rosePositions.forEach((pos) => {
-        addPresetItem('flower', 'White Rose', 'Roses', '/flowers/white-rose.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-      // Eucalyptus leaf fillers
-      const leafPositions = [
-        { x: 300, y: 280, s: 0.75, a: -35 },
-        { x: 500, y: 280, s: 0.75, a: 35 },
-        { x: 260, y: 360, s: 0.8, a: -50 },
-        { x: 540, y: 360, s: 0.8, a: 50 },
-        { x: 310, y: 460, s: 0.75, a: -20 },
-        { x: 490, y: 460, s: 0.75, a: 20 },
-      ];
-      leafPositions.forEach((pos) => {
-        addPresetItem('leaf', 'Eucalyptus', 'Eucalyptus', '/leaves/eucalyptus.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-    } else if (presetName === 'princess') {
-      wrap = 'pink-wrap';
-      ribbon = 'pink-ribbon';
-      // Pink Peonies + Lavender
-      const peonyPositions = [
-        { x: 400, y: 310, s: 0.85, a: 0 },
-        { x: 340, y: 350, s: 0.8, a: -20 },
-        { x: 460, y: 350, s: 0.8, a: 20 },
-        { x: 400, y: 400, s: 0.85, a: 10 },
-        { x: 310, y: 420, s: 0.75, a: -35 },
-        { x: 490, y: 420, s: 0.75, a: 35 },
-        { x: 360, y: 460, s: 0.8, a: -10 },
-        { x: 440, y: 460, s: 0.8, a: 10 },
-        { x: 400, y: 510, s: 0.75, a: 0 },
-      ];
-      peonyPositions.forEach((pos) => {
-        addPresetItem('flower', 'Pink Peony', 'Peonies', '/flowers/peony.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-      // Lavender stalks framing
-      const lavenderPositions = [
-        { x: 370, y: 260, s: 0.65, a: -10 },
-        { x: 430, y: 260, s: 0.65, a: 10 },
-        { x: 300, y: 310, s: 0.7, a: -30 },
-        { x: 500, y: 310, s: 0.7, a: 30 },
-        { x: 270, y: 390, s: 0.75, a: -45 },
-        { x: 530, y: 390, s: 0.75, a: 45 },
-        { x: 330, y: 510, s: 0.65, a: -15 },
-        { x: 470, y: 510, s: 0.65, a: 15 },
-      ];
-      lavenderPositions.forEach((pos) => {
-        addPresetItem('flower', 'Lavender', 'Lavender', '/flowers/lavender.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-    } else if (presetName === 'sunshine') {
-      wrap = 'kraft-paper';
-      ribbon = 'gold-ribbon';
-      // Sunflowers + Daisies
-      const sunflowerPositions = [
-        { x: 400, y: 320, s: 0.7, a: 0 },
-        { x: 330, y: 370, s: 0.68, a: -20 },
-        { x: 470, y: 370, s: 0.68, a: 20 },
-        { x: 400, y: 440, s: 0.72, a: 10 },
-        { x: 320, y: 470, s: 0.65, a: -15 },
-        { x: 480, y: 470, s: 0.65, a: 15 },
-        { x: 400, y: 530, s: 0.6, a: -5 },
-      ];
-      sunflowerPositions.forEach((pos) => {
-        addPresetItem('flower', 'Sunflower', 'Sunflowers', '/flowers/sunflower.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-      // Daisies surrounding and filling
-      const daisyPositions = [
-        { x: 360, y: 280, s: 0.65, a: -15 },
-        { x: 440, y: 280, s: 0.65, a: 15 },
-        { x: 300, y: 310, s: 0.6, a: -35 },
-        { x: 500, y: 310, s: 0.6, a: 35 },
-        { x: 370, y: 390, s: 0.7, a: 5 },
-        { x: 430, y: 390, s: 0.7, a: -5 },
-        { x: 260, y: 410, s: 0.65, a: -50 },
-        { x: 540, y: 410, s: 0.65, a: 50 },
-        { x: 350, y: 500, s: 0.68, a: -10 },
-        { x: 450, y: 500, s: 0.68, a: 10 },
-        { x: 290, y: 520, s: 0.6, a: -30 },
-        { x: 510, y: 520, s: 0.6, a: 30 },
-      ];
-      daisyPositions.forEach((pos) => {
-        addPresetItem('flower', 'White Daisy', 'Daisies', '/flowers/daisy.svg', pos.x, pos.y, pos.s, pos.a);
-      });
-    }
-
+    const { elements, wrap, ribbon } = generateBouquet(presetName, get().sizeMode);
     set({
-      elements: newElements,
+      elements,
       selectedWrap: wrap,
       selectedRibbon: ribbon,
       selectedElementId: null,
     });
   },
+
 }));

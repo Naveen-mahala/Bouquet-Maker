@@ -74,21 +74,15 @@ const createOffscreenCardDOM = (canvasDataUrl: string, messageCard: MessageCardS
   cardBorder.style.background = 'radial-gradient(circle at 10% 10%, rgba(245, 242, 235, 0.4) 0%, transparent 80%)';
   cardBorder.style.textAlign = 'center';
 
-  const subHeader = document.createElement('h4');
-  subHeader.innerText = 'DESIGNED ESPECIALLY FOR YOU';
-  subHeader.style.fontSize = '14px';
-  subHeader.style.fontWeight = 'bold';
-  subHeader.style.letterSpacing = '3px';
-  subHeader.style.color = '#b38254';
-  subHeader.style.margin = '0 0 20px 0';
-  subHeader.style.fontFamily = 'system-ui, sans-serif';
+  const recipientName = messageCard.recipient?.trim() || 'Bittu';
+  const senderName = messageCard.sender?.trim() || 'Navi';
 
   const title = document.createElement('h1');
-  title.innerText = messageCard.title || 'A Special Bouquet';
-  title.style.fontSize = '38px';
+  title.innerText = `For ${recipientName} ❤️`;
+  title.style.fontSize = '36px';
   title.style.fontWeight = '700';
   title.style.color = '#2d2520';
-  title.style.margin = '0 0 24px 0';
+  title.style.margin = '0 0 35px 0';
   title.style.lineHeight = '1.3';
   title.style.fontFamily = 'Georgia, serif';
 
@@ -96,39 +90,55 @@ const createOffscreenCardDOM = (canvasDataUrl: string, messageCard: MessageCardS
   divider.style.width = '60px';
   divider.style.height = '2px';
   divider.style.backgroundColor = '#b38254';
-  divider.style.margin = '0 0 30px 0';
+  divider.style.margin = '0 0 35px 0';
 
   const message = document.createElement('p');
   message.innerText = `"${messageCard.message || 'No message attached.'}"`;
-  message.style.fontSize = '20px';
-  message.style.lineHeight = '1.7';
+  message.style.fontSize = '22px';
+  message.style.lineHeight = '1.8';
   message.style.color = '#5c544e';
   message.style.fontStyle = 'italic';
   message.style.fontFamily = 'Georgia, serif';
   message.style.maxWidth = '550px';
-  message.style.margin = '0 0 40px 0';
+  message.style.margin = '0 0 45px 0';
 
-  const recipient = document.createElement('h3');
-  recipient.innerText = messageCard.recipient ? `With Love, to: ${messageCard.recipient}` : 'Made with Love ❤️';
-  recipient.style.fontSize = '22px';
-  recipient.style.fontWeight = '600';
-  recipient.style.color = '#b38254';
-  recipient.style.margin = '0';
-  recipient.style.fontFamily = 'Georgia, serif';
+  const fromContainer = document.createElement('div');
+  fromContainer.style.display = 'flex';
+  fromContainer.style.flexDirection = 'column';
+  fromContainer.style.alignItems = 'center';
+  fromContainer.style.gap = '6px';
+
+  const foreverYours = document.createElement('span');
+  foreverYours.innerText = 'FOREVER YOURS,';
+  foreverYours.style.fontSize = '12px';
+  foreverYours.style.fontWeight = 'bold';
+  foreverYours.style.letterSpacing = '2px';
+  foreverYours.style.color = '#a69e96';
+  foreverYours.style.fontFamily = 'system-ui, sans-serif';
+
+  const sender = document.createElement('h3');
+  sender.innerText = senderName;
+  sender.style.fontSize = '26px';
+  sender.style.fontWeight = '600';
+  sender.style.color = '#b38254';
+  sender.style.margin = '0';
+  sender.style.fontFamily = 'Georgia, serif';
+
+  fromContainer.appendChild(foreverYours);
+  fromContainer.appendChild(sender);
 
   const footer = document.createElement('span');
-  footer.innerText = 'Bouquet Maker Florist 🌸';
-  footer.style.fontSize = '12px';
-  footer.style.color = '#a69e96';
-  footer.style.marginTop = '45px';
+  footer.innerText = 'Dream Bouquet Studio 🌸';
+  footer.style.fontSize = '11px';
+  footer.style.color = '#c2bbb4';
+  footer.style.marginTop = '55px';
   footer.style.fontFamily = 'system-ui, sans-serif';
-  footer.style.letterSpacing = '1px';
+  footer.style.letterSpacing = '1.5px';
 
-  cardBorder.appendChild(subHeader);
   cardBorder.appendChild(title);
   cardBorder.appendChild(divider);
   cardBorder.appendChild(message);
-  cardBorder.appendChild(recipient);
+  cardBorder.appendChild(fromContainer);
   cardBorder.appendChild(footer);
 
   rightSide.appendChild(cardBorder);

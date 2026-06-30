@@ -3,28 +3,28 @@
 import React, { useState } from 'react';
 import { useBouquetStore } from '@/store/bouquetStore';
 import { exportToPNG, exportToPDF } from '@/lib/exportUtils';
-import { Download, Sparkles, Trash2, Heart, Star, Compass, Sun, CheckCircle2 } from 'lucide-react';
+import { Download, Sparkles, Trash2, Heart, Star, Compass, Sun, CheckCircle2, Sliders } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ExportPanel() {
-  const { elements, messageCard, clearWorkspace, loadPreset } = useBouquetStore();
+  const { elements, messageCard, clearWorkspace, loadPreset, sizeMode, setSizeMode } = useBouquetStore();
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handlePreset = (type: 'romantic' | 'elegant' | 'princess' | 'sunshine') => {
     loadPreset(type);
     
     // Tiny micro-confetti on template generation
     confetti({
-      particleCount: 30,
-      spread: 40,
+      particleCount: 35,
+      spread: 45,
       colors: ['#d4af37', '#e53935', '#ff8da1'],
       origin: { y: 0.8 }
     });
   };
 
   const getCanvasDataUrl = (): string => {
-    // Find the canvas elements rendering in Fabric.js
     const canvasEl = document.querySelector('#bouquet-canvas-container canvas') as HTMLCanvasElement;
     if (!canvasEl) {
       throw new Error('Canvas not found');
@@ -33,7 +33,6 @@ export default function ExportPanel() {
   };
 
   const triggerConfetti = () => {
-    // Elegant, premium fireworks confetti celebration
     const duration = 2.5 * 1000;
     const end = Date.now() + duration;
 
@@ -59,19 +58,54 @@ export default function ExportPanel() {
     }());
   };
 
+  const generateAIMessage = async (): Promise<string | null> => {
+    try {
+      setStatusMessage('Writing love letter with AI...');
+      const response = await fetch('/api/generate-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          recipientName: messageCard.recipient,
+          senderName: messageCard.sender,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.message;
+      }
+    } catch (err) {
+      console.error("AI generation endpoint failed, utilizing fallback:", err);
+    }
+    return null;
+  };
+
   const handleExportPNG = async () => {
     if (elements.length === 0) return;
     setIsExporting(true);
     try {
+      if (messageCard.enabled) {
+        const generatedMsg = await generateAIMessage();
+        if (generatedMsg) {
+          useBouquetStore.getState().updateMessageCard({ message: generatedMsg });
+        }
+      }
+      
+      setStatusMessage('Rendering digital bouquet...');
+      // Delay for state update to register in DOM before capture
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
       const dataUrl = getCanvasDataUrl();
-      await exportToPNG({ canvasDataUrl: dataUrl, messageCard });
+      const latestMessageCard = useBouquetStore.getState().messageCard;
+      await exportToPNG({ canvasDataUrl: dataUrl, messageCard: latestMessageCard });
+      
       setExportSuccess(true);
       triggerConfetti();
-      setTimeout(() => setExportSuccess(false), 3000);
+      setTimeout(() => setExportSuccess(false), 3500);
     } catch (e) {
       console.error(e);
     } finally {
       setIsExporting(false);
+      setStatusMessage('');
     }
   };
 
@@ -79,21 +113,69 @@ export default function ExportPanel() {
     if (elements.length === 0) return;
     setIsExporting(true);
     try {
+      if (messageCard.enabled) {
+        const generatedMsg = await generateAIMessage();
+        if (generatedMsg) {
+          useBouquetStore.getState().updateMessageCard({ message: generatedMsg });
+        }
+      }
+      
+      setStatusMessage('Rendering document...');
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
       const dataUrl = getCanvasDataUrl();
-      await exportToPDF({ canvasDataUrl: dataUrl, messageCard });
+      const latestMessageCard = useBouquetStore.getState().messageCard;
+      await exportToPDF({ canvasDataUrl: dataUrl, messageCard: latestMessageCard });
+      
       setExportSuccess(true);
       triggerConfetti();
-      setTimeout(() => setExportSuccess(false), 3000);
+      setTimeout(() => setExportSuccess(false), 3500);
     } catch (e) {
       console.error(e);
     } finally {
       setIsExporting(false);
+      setStatusMessage('');
     }
   };
 
   return (
-    <div className="flex flex-col gap-6 p-5 rounded-2xl border border-white/40 bg-white/50 backdrop-blur-md shadow-lg">
+    <div className="flex flex-col gap-5 p-5 rounded-2xl border border-white/40 bg-white/50 backdrop-blur-md shadow-lg">
       
+      {/* 0. Bouquet Quality Mode Selectors */}
+      <div className="flex flex-col gap-2.5">
+        <div className="flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-amber-800" />
+          <h3 className="font-serif text-sm font-semibold text-stone-800">Bouquet Size Mode</h3>
+        </div>
+        <div className="flex p-1 rounded-xl bg-stone-200/50 border border-stone-200/25">
+          {(['small', 'medium', 'grand'] as const).map((mode) => {
+            const isSelected = sizeMode === mode;
+            const labels = {
+              small: { title: 'Small', desc: '7-12 blooms' },
+              medium: { title: 'Medium', desc: '12-20 blooms' },
+              grand: { title: 'Grand', desc: '20-35 blooms' }
+            };
+            return (
+              <button
+                key={mode}
+                onClick={() => setSizeMode(mode)}
+                className={`flex flex-col items-center justify-center flex-1 py-1.5 px-1 rounded-lg text-center transition-all duration-300 ${
+                  isSelected
+                    ? 'bg-white text-amber-800 shadow-sm border border-stone-200/50'
+                    : 'text-stone-500 hover:text-stone-800 hover:bg-stone-50/50'
+                }`}
+              >
+                <span className="text-xs font-bold">{labels[mode].title}</span>
+                <span className="text-[9px] opacity-75">{labels[mode].desc}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="w-full h-px bg-stone-200" />
+
       {/* 1. Predefined Templates Section */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
@@ -119,7 +201,7 @@ export default function ExportPanel() {
             <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
             <div>
               <p className="font-semibold text-stone-800">Elegant Bouquet</p>
-              <p className="text-[9px] text-stone-500">White Roses & Leaves</p>
+              <p className="text-[9px] text-stone-500">White Roses & Lilies</p>
             </div>
           </button>
 
@@ -172,7 +254,7 @@ export default function ExportPanel() {
             className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-medium text-sm transition-all text-white bg-amber-800 hover:bg-amber-900 shadow-md hover:shadow-lg disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]"
           >
             <Download className="w-4 h-4" />
-            {isExporting ? 'Generating PNG...' : 'Download PNG Card'}
+            {isExporting ? (statusMessage || 'Generating PNG...') : 'Download PNG Card'}
           </button>
 
           <button
@@ -181,7 +263,7 @@ export default function ExportPanel() {
             className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-medium text-sm transition-all text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200/50 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]"
           >
             <Download className="w-4 h-4" />
-            {isExporting ? 'Generating PDF...' : 'Download PDF Document'}
+            {isExporting ? (statusMessage || 'Generating PDF...') : 'Download PDF Document'}
           </button>
         </div>
 
