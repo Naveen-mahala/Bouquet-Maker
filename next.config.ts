@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   // Prevent canvas (node-gyp native module) from being bundled server-side
   serverExternalPackages: ['canvas'],
 
@@ -21,15 +17,10 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  webpack: (config) => {
-    // Tell webpack to skip the native canvas module entirely
-    config.externals = [
-      ...(Array.isArray(config.externals) ? config.externals : [config.externals ?? {}]),
-      { canvas: 'commonjs canvas' },
-    ];
-    return config;
-  },
+  // Next.js 16 uses Turbopack by default.
+  // Declare an empty turbopack config to silence the webpack-vs-turbopack warning.
+  // canvas is handled via serverExternalPackages above; no webpack alias needed.
+  turbopack: {},
 };
 
 export default nextConfig;
-
