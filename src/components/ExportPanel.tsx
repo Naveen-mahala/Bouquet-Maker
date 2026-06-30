@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { useBouquetStore } from '@/store/bouquetStore';
 import { exportToPNG, exportToPDF } from '@/lib/exportUtils';
-import { Download, Sparkles, Trash2, Heart, Star, Compass, Sun, CheckCircle2, Sliders } from 'lucide-react';
+import { Download, Sparkles, Trash2, Heart, Star, Compass, Sun, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ExportPanel() {
-  const { elements, messageCard, clearWorkspace, loadPreset, sizeMode, setSizeMode } = useBouquetStore();
+  const { elements, messageCard, clearWorkspace, loadPreset } = useBouquetStore();
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
@@ -140,41 +140,6 @@ export default function ExportPanel() {
 
   return (
     <div className="flex flex-col gap-5 p-5 rounded-2xl border border-white/40 bg-white/50 backdrop-blur-md shadow-lg">
-      
-      {/* 0. Bouquet Quality Mode Selectors */}
-      <div className="flex flex-col gap-2.5">
-        <div className="flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-amber-800" />
-          <h3 className="font-serif text-sm font-semibold text-stone-800">Bouquet Size Mode</h3>
-        </div>
-        <div className="flex p-1 rounded-xl bg-stone-200/50 border border-stone-200/25">
-          {(['small', 'medium', 'grand'] as const).map((mode) => {
-            const isSelected = sizeMode === mode;
-            const labels = {
-              small: { title: 'Small', desc: '7-12 blooms' },
-              medium: { title: 'Medium', desc: '12-20 blooms' },
-              grand: { title: 'Grand', desc: '20-35 blooms' }
-            };
-            return (
-              <button
-                key={mode}
-                onClick={() => setSizeMode(mode)}
-                className={`flex flex-col items-center justify-center flex-1 py-1.5 px-1 rounded-lg text-center transition-all duration-300 ${
-                  isSelected
-                    ? 'bg-white text-amber-800 shadow-sm border border-stone-200/50'
-                    : 'text-stone-500 hover:text-stone-800 hover:bg-stone-50/50'
-                }`}
-              >
-                <span className="text-xs font-bold">{labels[mode].title}</span>
-                <span className="text-[9px] opacity-75">{labels[mode].desc}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="w-full h-px bg-stone-200" />
 
       {/* 1. Predefined Templates Section */}
       <div className="flex flex-col gap-3">
