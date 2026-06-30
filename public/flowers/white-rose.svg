@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 400" width="200" height="400">
+  
+  <defs>
+    <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d5a27" />
+      <stop offset="100%" stop-color="#15330e" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3c7a36" />
+      <stop offset="100%" stop-color="#1b4016" />
+    </linearGradient>
+
+    <linearGradient id="petalGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2dfd8" />
+      <stop offset="100%" stop-color="#fcfbf7" />
+    </linearGradient>
+    <linearGradient id="petalGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#c5c2ba" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Stem -->
+  <path d="M 100 130 Q 95 280 100 400" fill="none" stroke="url(#stemGrad)" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Stem Leaves -->
+  <path d="M 98 220 C 130 200 150 210 140 230 C 125 245 105 235 98 232" fill="url(#leafGrad)" stroke="#15330e" stroke-width="1.5" />
+  <path d="M 97 270 C 60 260 40 275 50 295 C 65 305 85 290 97 282" fill="url(#leafGrad)" stroke="#15330e" stroke-width="1.5" />
+  
+  <!-- Calyx -->
+  <path d="M 75 130 C 75 145 125 145 125 130 C 120 155 80 155 75 130" fill="#2d5a27" />
+  <path d="M 78 135 L 65 155 L 85 142 L 100 165 L 115 142 L 135 155 L 122 135 Z" fill="#2d5a27" />
+
+  <!-- Rose Bloom -->
+  <g id="bloom">
+    <!-- Outer Petals -->
+    <path d="M 50 110 C 20 80 50 40 90 60 C 70 20 130 20 110 60 C 150 40 180 80 150 110 C 170 140 120 160 100 140 C 80 160 30 140 50 110 Z" fill="url(#petalGrad1)" />
+    
+    <!-- Mid Petals -->
+    <path d="M 65 105 C 50 85 65 55 100 70 C 135 55 150 85 135 105 C 145 125 115 135 100 125 C 85 135 55 125 65 105 Z" fill="url(#petalGrad2)" opacity="0.95" />
+    
+    <!-- Inner Petals / Bud Core -->
+    <path d="M 80 100 C 75 85 85 75 100 82 C 115 75 125 85 120 100 C 115 112 85 112 80 100 Z" fill="url(#petalGrad1)" />
+    <path d="M 88 95 C 88 88 95 85 100 90 C 105 85 112 88 112 95 C 110 102 90 102 88 95 Z" fill="#c5c2ba" />
+  </g>
+</svg>

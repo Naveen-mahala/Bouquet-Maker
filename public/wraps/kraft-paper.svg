@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <defs>
+    <linearGradient id="kraftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bf9a75" />
+      <stop offset="40%" stop-color="#d4b594" />
+      <stop offset="80%" stop-color="#bf9a75" />
+      <stop offset="100%" stop-color="#9e7b57" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <g filter="url(#shadow)">
+    <!-- Base Wrap Paper -->
+    <path d="M 150 150 L 450 150 L 520 600 Q 300 680 80 600 Z" fill="url(#kraftGrad)" stroke="#9e7b57" stroke-width="2" />
+    
+    <!-- Folds & Creases -->
+    <path d="M 80 600 C 180 500 220 300 150 150 C 250 200 350 450 320 650 Q 200 650 80 600 Z" fill="#cfa780" stroke="#9e7b57" stroke-width="1" opacity="0.9" />
+    <path d="M 520 600 C 420 500 380 300 450 150 C 350 200 250 450 280 650 Q 400 650 520 600 Z" fill="#b08a65" stroke="#7e5d3c" stroke-width="1" opacity="0.8" />
+    
+    <path d="M 120 180 Q 220 280 180 400" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+    <path d="M 480 180 Q 380 280 420 400" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1.5" />
+  </g>
+</svg>

@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 400" width="150" height="400">
+  <defs>
+    <linearGradient id="lavenderStem" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a7c59" />
+      <stop offset="100%" stop-color="#2c5e3b" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Stem -->
+  <path d="M 75 80 L 75 400" fill="none" stroke="url(#lavenderStem)" stroke-width="4.5" stroke-linecap="round" />
+  
+  <!-- Lavender Flower Clusters (stacked little buds) -->
+  <g fill="#9575cd" stroke="#5e35b1" stroke-width="0.5">
+    <!-- Stacked clusters going up -->
+    
+      <g transform="translate(75, 80) scale(1)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 96) scale(0.95)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 112) scale(0.9)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 128) scale(0.85)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 144) scale(0.8)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 160) scale(0.75)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 176) scale(0.7)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 192) scale(0.6499999999999999)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 208) scale(0.6)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 224) scale(0.55)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 240) scale(0.5)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+      <g transform="translate(75, 256) scale(0.44999999999999996)">
+        <!-- Center Bud -->
+        <ellipse cx="0" cy="-5" rx="5" ry="8" fill="#7986cb" />
+        <!-- Left Side Buds -->
+        <ellipse cx="-10" cy="0" rx="7" ry="5" transform="rotate(-15)" />
+        <ellipse cx="-18" cy="3" rx="5" ry="4" transform="rotate(-30)" fill="#b39ddb" />
+        <!-- Right Side Buds -->
+        <ellipse cx="10" cy="0" rx="7" ry="5" transform="rotate(15)" />
+        <ellipse cx="18" cy="3" rx="5" ry="4" transform="rotate(30)" fill="#b39ddb" />
+      </g>
+      
+    
+    <!-- Top bud -->
+    <ellipse cx="75" cy="65" rx="5" ry="7" fill="#b39ddb" />
+  </g>
+</svg>

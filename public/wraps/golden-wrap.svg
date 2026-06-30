@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <defs>
+    <linearGradient id="goldPaperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff275" />
+      <stop offset="30%" stop-color="#ffd700" />
+      <stop offset="70%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#b8860b" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <g filter="url(#shadow)">
+    <path d="M 130 140 L 470 140 L 530 620 Q 300 690 70 620 Z" fill="url(#goldPaperGrad)" stroke="#b8860b" stroke-width="2" />
+    <path d="M 70 620 C 180 520 230 250 130 140 C 230 200 360 400 330 660 Q 200 660 70 620 Z" fill="#ffeb3b" stroke="#d4af37" stroke-width="1.5" opacity="0.85" />
+    <path d="M 530 620 C 420 520 370 250 470 140 C 370 200 240 400 270 660 Q 400 660 530 620 Z" fill="#cfab2c" stroke="#aa7c11" stroke-width="1.5" opacity="0.8" />
+  </g>
+</svg>
