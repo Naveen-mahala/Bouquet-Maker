@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  webpack: (config) => {
+    config.externals.push({
+      canvas: 'commonjs canvas',
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
